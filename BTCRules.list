@@ -1,6 +1,6 @@
 # > 非小号
-DOMAIN-SUFFIX,fxhapp
-DOMAIN-SUFFIX,feixiaohao
+DOMAIN-KEYWORD,fxhapp
+DOMAIN-KEYWORD,feixiaohao
 
 # > Binance
 DOMAIN-SUFFIX,binance.com
@@ -8,19 +8,19 @@ DOMAIN-SUFFIX,binance.me
 DOMAIN-SUFFIX,bnbstatic.com
 
 # > BSCScan
-DOMAIN-SUFFIX,bscscan
+DOMAIN-KEYWORD,bscscan
 
 # > coingecko
-DOMAIN-SUFFIX,coingecko
+DOMAIN-KEYWORD,coingecko
 
 # > opensea
-DOMAIN-SUFFIX,opensea
+DOMAIN-KEYWORD,opensea
 
 # > mytoken
-DOMAIN-SUFFIX,mytoken
+DOMAIN-KEYWORD,mytoken
 
 # > coinmarketcap
-DOMAIN-SUFFIX,coinmarketcap
+DOMAIN-KEYWORD,coinmarketcap
 
 # > mytoken
-DOMAIN-SUFFIX,mytoken
+DOMAIN-KEYWORD,mytoken
