@@ -1,0 +1,26 @@
+# > 非小号
+DOMAIN-SUFFIX,fxhapp
+DOMAIN-SUFFIX,feixiaohao
+
+# > Binance
+DOMAIN-SUFFIX,binance.com
+DOMAIN-SUFFIX,binance.me
+DOMAIN-SUFFIX,bnbstatic.com
+
+# > BSCScan
+DOMAIN-SUFFIX,bscscan
+
+# > coingecko
+DOMAIN-SUFFIX,coingecko
+
+# > opensea
+DOMAIN-SUFFIX,opensea
+
+# > mytoken
+DOMAIN-SUFFIX,mytoken
+
+# > coinmarketcap
+DOMAIN-SUFFIX,coinmarketcap
+
+# > mytoken
+DOMAIN-SUFFIX,mytoken
