@@ -55,7 +55,7 @@ cd $HOME
 rm -rf babylon
 git clone https://github.com/babylonchain/babylon
 cd babylon
-git checkout v0.8.4
+git checkout v0.8.3
 
 # 创建安装
 make install
