@@ -56,9 +56,6 @@ function install_node() {
 
     # 安装Go
     sudo rm -rf /usr/local/go
-    #ARM版本GO内核
-    #curl -L https://go.dev/dl/go1.22.1.linux-arm64.tar.gz | sudo tar -xzf - -C /usr/local
-    #非ARM版本GO内核
     curl -L https://go.dev/dl/go1.22.0.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
     echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
     export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
@@ -234,6 +231,17 @@ cargo build --release
 
 #后台运行
 cd run
+
+
+echo "请输入矿工的EVM钱包私钥，不要有0X: "
+read minerkey
+
+cat >> config.toml <<EOF
+miner_key = "$minerkey"
+miner_id = "$(echo -n "string" | sha256sum | cut -d' ' -f1)"
+EOF
+
+
 screen -dmS zgs_node_session ../target/release/zgs_node --config config.toml
 
 echo '====================== 安装完成 ==========================='
@@ -261,11 +269,6 @@ cd run
 echo "请输入RPC节点信息: "
 read blockchain_rpc_endpoint
 
-echo "请输入矿工的EVM钱包地址: "
-read minerid
-
-echo "请输入矿工的EVM钱包私钥，不要有0X: "
-read minerkey
 
 cat > config.toml <<EOF
 stream_ids = ["000000000000000000000000000000000000000000000000000000000000f2bd", "000000000000000000000000000000000000000000000000000000000000f009", "00000000000000000000000000"]
@@ -282,8 +285,6 @@ log_config_file = "log_config"
 blockchain_rpc_endpoint = "$blockchain_rpc_endpoint"
 log_contract_address = "0x22C1CaF8cbb671F220789184fda68BfD7eaA2eE1"
 log_sync_start_block_number = 670000
-miner_key ="$minerkey"
-miner_id ="$minerid"
 
 EOF
 
@@ -304,7 +305,8 @@ evmosd tx staking delegate $(evmosd keys show wallet --bech val -a)  ${math}evmo
 function main_menu() {
     while true; do
         clear
-        echo "===本脚本为0G测试网的安装脚本==="
+        echo "====脚本适用于0G测试网===="
+        echo "退出脚本，请按键盘ctrl c退出即可"
         echo "请选择要执行的操作:"
         echo "1. 安装节点"
         echo "2. 创建钱包"
@@ -316,9 +318,8 @@ function main_menu() {
         echo "8. 卸载节点"
         echo "9. 创建验证者"  
         echo "10. 创建存储节点"  
-        echo "11. 创建存储KV节点（非必要，可以不用安装）"  
-        echo "12. 给自己验证者地址质押代币"
-        read -p "请输入选项（1-12）: " OPTION
+        echo "11. 给自己验证者地址质押代币"
+        read -p "请输入选项（1-11）: " OPTION
 
         case $OPTION in
         1) install_node ;;
@@ -331,8 +332,7 @@ function main_menu() {
         8) uninstall_node ;;
         9) add_validator ;;
         10) install_storage_node ;;
-        11) install_storage_kv ;;
-        12) delegate_self_validator ;;
+        11) delegate_self_validator ;;
         *) echo "无效选项。" ;;
         esac
         echo "按任意键返回主菜单..."
