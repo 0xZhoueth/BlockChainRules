@@ -58,7 +58,6 @@ function install_node() {
     sudo rm -rf /usr/local/go
     curl -L https://go.dev/dl/go1.22.0.linux-amd64.tar.gz | sudo tar -xzf - -C /usr/local
     echo 'export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin' >> $HOME/.bash_profile
-    export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
     source $HOME/.bash_profile
 
     # 安装所有二进制文件
@@ -69,10 +68,8 @@ function install_node() {
     evmosd version
 
     # 配置evmosd
-    echo 'export MONIKER="My_Node"' >> ~/.bash_profile
-    echo 'export WALLET_NAME="wallet"' >> ~/.bash_profile
-
-    source $HOME/.bash_profile
+    export MONIKER="My_Node"
+    export WALLET_NAME="wallet"
 
     # 获取初始文件和地址簿
     cd $HOME
@@ -102,7 +99,7 @@ function install_node() {
     pm2 stop evmosd
 
     # 下载最新的快照
-    wget https://rpc-zero-gravity-testnet.trusted-point.com/latest_snapshot.tar.lz4
+    wget -O latest_snapshot.tar.lz4 https://rpc-zero-gravity-testnet.trusted-point.com/latest_snapshot.tar.lz4
 
     # 备份当前的验证者状态文件
     cp $HOME/.evmosd/data/priv_validator_state.json $HOME/.evmosd/priv_validator_state.json.backup
@@ -124,7 +121,7 @@ function install_node() {
     evmosd status | jq .SyncInfo
 
 
-    echo '====================== 安装完成 ==========================='
+    echo '====================== 安装完成,退出脚本后执行 source $HOME/.bash_profile 以加载环境变量==========================='
     echo '安装完成请重新连接VPS，以启用对应快捷键功能'
     
 }
@@ -148,7 +145,7 @@ function uninstall_node() {
         [yY][eE][sS]|[yY]) 
             echo "开始卸载节点程序..."
             pm2 stop evmosd && pm2 delete evmosd
-            rm -rf $HOME/.evmosd $HOME/evmos $(which evmosd)
+            rm -rf $HOME/.evmosd $HOME/evmos $(which evmosd) && rm -rf 0g-evmos
             echo "节点程序卸载完成。"
             ;;
         *)
@@ -159,12 +156,14 @@ function uninstall_node() {
 
 # 创建钱包
 function add_wallet() {
-    evmosd keys add wallet
+    read -p "请输入你想设置的钱包名称: " wallet_name
+    evmosd keys add $wallet_name
 }
 
 # 导入钱包
 function import_wallet() {
-    evmosd keys add wallet --recover
+    read -p "请输入你想设置的钱包名称: " wallet_name
+    evmosd keys add $wallet_name --recover
 }
 
 # 查询余额
@@ -187,7 +186,7 @@ read -p "请输入您的验证者详情（例如'吊毛资本'）: " details
 
 
 evmosd tx staking create-validator \
-  --amount=1200000000000000000aevmos \
+  --amount=10000000000000000aevmos \
   --pubkey=$(evmosd tendermint show-validator) \
   --moniker=$validator_name \
   --chain-id=zgtendermint_9000-1 \
@@ -236,9 +235,9 @@ cd run
 echo "请输入矿工的EVM钱包私钥，不要有0X: "
 read minerkey
 
-cat >> config.toml <<EOF
+cat > config.toml <<EOF
 miner_key = "$minerkey"
-miner_id = "$(echo -n "string" | sha256sum | cut -d' ' -f1)"
+miner_id = "$(openssl rand -hex 32)"
 EOF
 
 
@@ -301,11 +300,17 @@ evmosd tx staking delegate $(evmosd keys show wallet --bech val -a)  ${math}evmo
 
 }
 
+# 查看存储节点同步状态
+function check_storage_status() {
+    tail -f "$(find ~/0g-storage-node/run/log/ -type f -printf '%T+ %p\n' | sort -r | head -n 1 | cut -d' ' -f2-)"
+}
+
+
 # 主菜单
 function main_menu() {
     while true; do
         clear
-        echo "====脚本适用于0G测试网===="
+        echo "===0G节点安装脚本==="
         echo "退出脚本，请按键盘ctrl c退出即可"
         echo "请选择要执行的操作:"
         echo "1. 安装节点"
@@ -318,7 +323,8 @@ function main_menu() {
         echo "8. 卸载节点"
         echo "9. 创建验证者"  
         echo "10. 创建存储节点"  
-        echo "11. 给自己验证者地址质押代币"
+        echo "11. 查看存储节点日志"  
+        echo "12. 给自己验证者地址质押代币"
         read -p "请输入选项（1-11）: " OPTION
 
         case $OPTION in
@@ -332,7 +338,8 @@ function main_menu() {
         8) uninstall_node ;;
         9) add_validator ;;
         10) install_storage_node ;;
-        11) delegate_self_validator ;;
+        11) check_storage_status ;;
+        12) delegate_self_validator ;;
         *) echo "无效选项。" ;;
         esac
         echo "按任意键返回主菜单..."
