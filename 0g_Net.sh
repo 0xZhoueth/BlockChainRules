@@ -61,7 +61,7 @@ function install_node() {
     source $HOME/.bash_profile
 
     # 安装所有二进制文件
-    git clone https://github.com/0glabs/0g-evmos.git /mnt/newdisk
+    git clone https://github.com/0glabs/0g-evmos.git /mnt/newdisk/0g
     cd 0g-evmos
     git checkout v1.0.0-testnet
     make install
