@@ -115,7 +115,7 @@ function install_node() {
     pm2 stop evmosd
 
     # 下载最新的快照
-    scp root@194.233.94.125:~/latest_snapshot.tar.lz4 /root
+    scp root@154.26.131.147:~/latest_snapshot.tar.lz4 /root
     #wget -O latest_snapshot.tar.lz4 https://rpc-zero-gravity-testnet.trusted-point.com/latest_snapshot.tar.lz4
 
     # 备份当前的验证者状态文件
