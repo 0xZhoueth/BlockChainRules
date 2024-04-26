@@ -333,10 +333,7 @@ echo "0x$(evmosd debug addr $(evmosd keys show $wallet_name -a) | grep hex | awk
 function main_menu() {
     while true; do
         clear
-        echo "脚本以及教程由推特用户大赌哥 @y95277777 编写，免费开源，请勿相信收费"
-        echo "=======================验证节点功能================================"
-        echo "节点社区 Telegram 群组:https://t.me/niuwuriji"
-        echo "节点社区 Discord 社群:https://discord.gg/GbMV5EcNWF"
+        echo "=======================0g验证节点功能================================"
         echo "退出脚本，请按键盘ctrl c退出即可"
         echo "请选择要执行的操作:"
         echo "1. 安装节点"
@@ -350,7 +347,7 @@ function main_menu() {
         echo "9. 创建验证者"  
         echo "10. 给自己验证者地址质押代币"
         echo "11. 转换ETH地址"
-        echo "=======================存储节点功能================================"
+        echo "=======================0g存储节点功能================================"
         echo "12. 创建存储节点"  
         echo "13. 查看存储节点日志"  
         echo "14. 单独启动存储节点代码，适用于需要修改存储路径等功能修改过后使用"
