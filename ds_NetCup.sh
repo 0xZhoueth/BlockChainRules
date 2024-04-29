@@ -1,4 +1,6 @@
 #!/bin/bash
+#准备工作
+mkdir /mnt/newdisk
 
 # 格式化磁盘
 if sudo mkfs.ext4 /dev/vdb; then
