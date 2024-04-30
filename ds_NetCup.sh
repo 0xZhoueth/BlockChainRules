@@ -15,7 +15,7 @@ NC='\033[0m' # 恢复默认颜色
 #echo -e "${GREEN}绿色文字${NC}"
 #echo -e "${YELLOW}黄色文字${NC}"
 #准备工作
-echo -e "${GREEN}【第一步】：创建挂载文件夹${NC}}"
+echo -e "${GREEN}【第一步】：创建挂载文件夹${NC}"
 mkdir /mnt/newdisk
 echo -e "${BLUE}    文件夹 ${PINK} /mnt/newdisk ${BLUE}创建成功${NC}"
 
