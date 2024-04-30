@@ -71,8 +71,8 @@ function install_node() {
     fi
 
     # 安装所有二进制文件
-    git clone https://github.com/a3165458/0g-evmos.git /mnt/newdisk/0g/0g-evmos
-    cd /mnt/newdisk/0g/0g-evmos
+    git clone https://github.com/a3165458/0g-evmos.git /mnt/newdisk/0g-evmos
+    cd /mnt/newdisk/0g-evmos
     make install
     evmosd version
 
