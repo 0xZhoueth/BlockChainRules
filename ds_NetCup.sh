@@ -21,6 +21,7 @@ echo -e "${BLUE}    文件夹 ${PINK} /mnt/newdisk ${BLUE}创建成功${NC}"
 
 # 格式化磁盘
 echo -e "${GREEN}第二步：格式化磁盘 ${PINK} /dev/vdb ${NC}"
+echo -e "${BLUE}===============================================================${NC}"
 if sudo mkfs.ext4 /dev/vdb; then
     echo -e "${BLUE}    磁盘格式化成功${NC}"
 else
@@ -29,6 +30,7 @@ else
 fi
 
 # 挂载分区
+echo -e "${BLUE}===============================================================${NC}"
 echo -e "${GREEN}第三步：挂载分区 ${PINK}/dev/vdb ${GREEN}在 ${PINK}/mnt/newdisk ${GREEN}下：${NC}"
 if sudo mount /dev/vdb /mnt/newdisk; then
     echo -e "${BLUE}    分区挂载成功${NC}"
