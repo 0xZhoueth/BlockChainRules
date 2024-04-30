@@ -15,12 +15,12 @@ NC='\033[0m' # 恢复默认颜色
 #echo -e "${GREEN}绿色文字${NC}"
 #echo -e "${YELLOW}黄色文字${NC}"
 #准备工作
-echo -e "${GREEN}第一步：创建挂载文件夹${NC}}"
+echo -e "${GREEN}【第一步】：创建挂载文件夹${NC}}"
 mkdir /mnt/newdisk
 echo -e "${BLUE}    文件夹 ${PINK} /mnt/newdisk ${BLUE}创建成功${NC}"
 
 # 格式化磁盘
-echo -e "${GREEN}第二步：格式化磁盘 ${PINK} /dev/vdb ${NC}"
+echo -e "${GREEN}【第二步】：格式化磁盘 ${PINK} /dev/vdb ${NC}"
 echo -e "${BLUE}===============================================================${NC}"
 if sudo mkfs.ext4 /dev/vdb; then
     echo -e "${BLUE}    磁盘格式化成功${NC}"
@@ -31,7 +31,7 @@ fi
 
 # 挂载分区
 echo -e "${BLUE}===============================================================${NC}"
-echo -e "${GREEN}第三步：挂载分区 ${PINK}/dev/vdb ${GREEN}在 ${PINK}/mnt/newdisk ${GREEN}下：${NC}"
+echo -e "${GREEN}【第三步】：挂载分区 ${PINK}/dev/vdb ${GREEN}在 ${PINK}/mnt/newdisk ${GREEN}下：${NC}"
 if sudo mount /dev/vdb /mnt/newdisk; then
     echo -e "${BLUE}    分区挂载成功${NC}"
 else
@@ -40,7 +40,7 @@ else
 fi
 
 # 开机自动挂载分区
-echo -e "${GREEN}第四步：开机自动挂载分区${NC}"
+echo -e "${GREEN}【第四步】：开机自动挂载分区${NC}"
 # 第一步：获取磁盘的uuid
 disk_uuid=$(sudo blkid -s UUID -o value /dev/vdb)
 if [ -z "$disk_uuid" ]; then
@@ -51,7 +51,7 @@ else
 fi
 
 # 第二步：编辑文件
-echo -e "${GREEN}第五步：写入启动文件...${NC}"
+echo -e "${GREEN}【第五步】：写入启动文件...${NC}"
 if sudo sh -c 'echo "UUID='"$disk_uuid"' /mnt/newdisk ext4 defaults 0 2" >> /etc/fstab'; then
     echo -e "${BLUE}    成功将UUID写入 ${PINK} /etc/fstab ${NC}"
 else
@@ -60,7 +60,7 @@ else
 fi
 
 # 第四步：重新挂载所有分区，以验证/etc/fstab配置是否正确。
-echo -e "${GREEN}最终步：重新挂载所有分区，验证是否正确...${NC}"
+echo -e "${GREEN}【最终步】：重新挂载所有分区，验证是否正确...${NC}"
 if sudo mount -a; then
     echo -e "${BLUE}    重新挂载分区成功!${NC}"
 else
