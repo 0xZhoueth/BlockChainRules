@@ -71,8 +71,8 @@ function install_node() {
     fi
 
     # 安装所有二进制文件
-    git clone -b v0.1.0 https://github.com/0glabs/0g-chain.git
-    cd 0g-chain
+    git clone -b v0.1.0 https://github.com/0glabs/0g-chain.git /pt
+    cd /pt/0g-chain
     make install
 
     # 配置0gchaind
@@ -207,10 +207,10 @@ function install_storage_node() {
 
     
 # 克隆仓库
-git clone -b v0.2.0 https://github.com/0glabs/0g-storage-node.git /pt
+git clone -b v0.2.0 https://github.com/0glabs/0g-storage-node.git
 
 #进入对应目录构建
-cd /pt/0g-storage-node
+cd 0g-storage-node
 git submodule update --init
 
 # 构建代码
@@ -238,11 +238,11 @@ echo '===进入对应路径:/0g-storage-node/run/log，使用tail -f logs文件�
 function install_storage_kv() {
 
 # 克隆仓库
-git clone https://github.com/0glabs/0g-storage-kv.git /pt
+git clone https://github.com/0glabs/0g-storage-kv.git
 
 
 #进入对应目录构建
-cd /pt/0g-storage-kv
+cd 0g-storage-kv
 git submodule update --init
 
 # 构建代码
@@ -258,7 +258,7 @@ read blockchain_rpc_endpoint
 cat > config.toml <<EOF
 stream_ids = ["000000000000000000000000000000000000000000000000000000000000f2bd", "000000000000000000000000000000000000000000000000000000000000f009", "00000000000000000000000000"]
 
-db_dir = "db"
+db_dir = "/pt"
 kv_db_dir = "kv.DB"
 
 rpc_enabled = true
@@ -293,7 +293,7 @@ function check_storage_status() {
 
 # 查看存储节点同步状态
 function start_storage() {
-cd /pt/0g-storage-node/run && screen -dmS zgs_node_session ../target/release/zgs_node --config config.toml
+cd 0g-storage-node/run && screen -dmS zgs_node_session ../target/release/zgs_node --config config.toml
 echo '====================== 启动成功，请通过screen -r zgs_node_session 查询 ==========================='
 
 }
