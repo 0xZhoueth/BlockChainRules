@@ -210,7 +210,7 @@ function install_storage_node() {
 git clone -b v0.2.0 https://github.com/0glabs/0g-storage-node.git /pt
 
 #进入对应目录构建
-cd 0g-storage-node
+cd /pt/0g-storage-node
 git submodule update --init
 
 # 构建代码
